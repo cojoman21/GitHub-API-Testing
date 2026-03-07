@@ -25,14 +25,13 @@ jobs:
               env:
                 AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
                 AUTH_USER: ${{ secrets.AUTH_USER }}
-              run: uv run pytest --md-report --md-report-verbose=header --md-report-color=never > report.md
-
+              run: uv run pytest \
+                     --md-report --md-report-verbose=header --md-report-color=never > report.md \
+                     --html=report.html --self-contained-html
+            
             - name: Add Report to Summary
               if: always()
               run: cat report.md >> $GITHUB_STEP_SUMMARY
-            
-            - name: Run Tests with HTML Report
-              run: uv run pytest --html=report.html --self-contained-html || true
             
             - name: Upload HTML Report
               if: always()
