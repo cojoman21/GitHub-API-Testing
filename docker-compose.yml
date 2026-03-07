@@ -1,0 +1,7 @@
+services:
+  api-tests:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - PYTEST_ADDOPTS=--color=yes
