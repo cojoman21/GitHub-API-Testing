@@ -26,6 +26,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "pytest-html" },
     { name = "pytest-md-report" },
 ]
 
@@ -40,7 +41,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest-md-report", specifier = ">=0.7.0" }]
+dev = [
+    { name = "pytest-html", specifier = ">=4.2.0" },
+    { name = "pytest-md-report", specifier = ">=0.7.0" },
+]
 
 [[package]]
 name = "certifi"
