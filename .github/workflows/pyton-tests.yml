@@ -1,0 +1,42 @@
+name: API Tests
+
+on: [push, pull_request]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                enable-cache: true
+              
+            - name: Set up Python
+              run: uv python install 3.12
+            
+            - name: Install dependencies
+              run: uv sync --frozen
+            
+            - name: Run Tests
+              env:
+                AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+                AUTH_USER: ${{ secrets.AUTH_USER }}
+              run: uv run pytest --md-report --md-report-verbose=header --md-report-color=never > report.md
+
+            - name: Add Report to Summary
+              if: always()
+              run: cat report.md >> $GITHUB_STEP_SUMMARY
+            
+            - name: Run Tests with HTML Report
+              run: uv run pytest --html=report.html --self-contained-html
+            
+            - name: Upload HTML Report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                name: github-api-test-report
+                path: report.html
