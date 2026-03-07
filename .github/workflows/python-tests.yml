@@ -25,9 +25,10 @@ jobs:
               env:
                 AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
                 AUTH_USER: ${{ secrets.AUTH_USER }}
-              run: uv run pytest \
-                     --md-report --md-report-verbose=header --md-report-color=never > report.md \
-                     --html=report.html --self-contained-html
+              run: |
+                uv run pytest \
+                  --md-report --md-report-verbose=header --md-report-color=never > report.md \
+                  --html=report.html --self-contained-html
             
             - name: Add Report to Summary
               if: always()
