@@ -27,7 +27,7 @@ jobs:
                 AUTH_USER: ${{ secrets.AUTH_USER }}
               run: |
                 uv run pytest \
-                  --md-report --md-report-verbose=header --md-report-color=never > report.md \
+                  --md-report --md-report-file report.md --md-report-color never \
                   --html=report.html --self-contained-html
             
             - name: Add Report to Summary
