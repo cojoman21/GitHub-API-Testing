@@ -2,78 +2,52 @@
 <h3>GitHub API Testing</h3>
 </div>
 
-### This project showcases CRUD workflows while testing the GitHub API. 
-It covers two main topics:
-### *Positive workflows*
-1. Create: POST /user/repos to create new repository
-2. Read: GET /repos/{owner}/{repo} to verify it exists and has the correct settings
-3. Update: PATCH /repos/{owner}/{repo} to change the description or visibility
-4. Delete: DELETE /repos/{owner}/{repo} to clean up
+### This project showcases the CRUD workflow while testing the GitHub API. 
+It covers both positive and negative tests. For more info check the test files at: 
 
-Tests that cover this:
-- `test_repo_workflow.py`
-- `test_issue_workflow.py`
-- `test_comment_workflow.py`
+```root/tests/```
 
-For more info, check the comments in each file.
+<div style="text-align: center"><h2><strong>Run locally</strong></h2></div><br>
 
-### *Negative workflows*
+For this project, I've used `uv`. 
+To install `uv`, follow the steps from this [link](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
 
-1. 401 Unauthorized: Attempt a private action with an invalid token
-2. 404 Not Found: Requesting a repository that doesn't exist
-3. 422 Unprocessable entity: Trying to create a repository with a name that already exists
+If you want to run this locally, follow these steps (for Windows):
 
-Tests that cover this:
-- `test_401_invalid_token.py`
-- `test_404_repo_not_found.py`
-- `test_422_create_dupe_repo.py`
-- `test_422_create_repo_without_name.py`
+### 1. Download the project ZIP and extract it
+### 2. Navigate into the root project directory and open a terminal here
+- Shift+Right Click > Open in Terminal
+  <br>or
+- Navigate here using the Terminal
 
-<div style="text-align: center"><h2><strong>Project setup</strong></h2></div><br>
 
-For this project, I've used `uv` to create the `.venv` and handle the package installation. 
-To install uv, check this [link](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
+### 3. Initialize the project
 
-### 1. Initialize the project
-
-Open a terminal window and run the following commands:
+In the terminal window run the following command:
 
 <h5 a><strong><code>terminal</code></strong></h5>
 
-```
-uv init project-name
-cd project-name
-```
-
-### 2. Add dependencies
-
-<h5 a><strong><code>terminal</code></strong></h5>
 
 ```
 uv sync
 ```
 This will use the dependencies listed inside `pyproject.toml`
 
-or you could:
 
-<h5 a><strong><code>terminal</code></strong></h5>
 
-```
-uv pip install -r requirements.txt
-```
 
-This will use `requirements.txt` instead of `pyproject.toml`
-
-### 3. Configure the `.env` file
+### 4. Configure the `.env` file
 
 - Create a file named `.env` in the root directory and add your credentials:
 
 <h5 a><strong><code>.env</code></strong></h5>
 
 ```
-GITHUB_TOKEN=your_github_token
-GITHUB_USERNAME=your_github_username
+AUTH_TOKEN=your_github_token
+AUTH_USER=your_github_username
 ```
+You need to generate a token from GitHub using [these](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) steps
+
 - Add `.env` to your `.gitignore` file to prevent it from being pushed to GitHub
 
 <h5 a><strong><code>.gitignore</code></strong></h5>
@@ -82,36 +56,36 @@ GITHUB_USERNAME=your_github_username
 .env
 ```
 
-- Access the variables in your Python code:
-
-<h5 a><strong><code>.py</code></strong></h5>
-
-```python
-import os
-from dotenv import load_dotenv
-
-load_dotenv()  # This searches for and loads the .env file
-
-username = os.getenv("GITHUB_USERNAME")
-token = os.getenv("GITHUB_TOKEN")
-```
-
-###### Check `root/api_clients/base_client.py` to see the real usage
-
-
-### 4. Run a test
-
-To run a test, you'll have to use the command `pytest [test-location]`
-
-For example:
+### 5. Run the test suite
 
 <h5 a><strong><code>terminal</code></strong></h5>
 
 ```
-pytest tests/test_repo_workflow.py
+uv run pytest
 ```
 
 
+
+To run a single test:
+
+<h5 a><strong><code>terminal</code></strong></h5>
+
+```
+uv run pytest tests/test_repo_workflow.py
+```
+
+
+
+To run tests with reports:
+
+<h5 a><strong><code>terminal</code></strong></h5>
+
+```
+uv run pytest --md-report --md-report-output reports/report.md --md-report-color never --html=reports/report.html --self-contained-html
+```
+
+
+The reports will be available at ```root/reports/```. Make sure the path exists before running the command.
 
 <div style="text-align: center"><h2><strong>conftest.py</strong></h2></div><br>
 
@@ -128,10 +102,12 @@ Here we inject the fixture `repo_client` into a test:
 def test_create_and_delete_repo_workflow(repo_client):
 ```
 
-###### Check `root/tests/test_repo_workflow.py`
+###### Check `root/tests/test_repo_workflow.py` to see the real usage.
 
-### We used:
+### What this uses:
 - [pytest](https://docs.pytest.org/en/stable/getting-started.html) to organize the test suite and handle complex setups through fixtures
 - [pydantic](https://docs.pydantic.dev/latest/) for schema validation to ensure API responses match the defined data models
 - [python-dotenv](https://pypi.org/project/python-dotenv/) to manage the sensitive data such as the GitHub credentials, ensuring they remain excluded from version control.
 - [requests](https://requests.readthedocs.io/en/latest/) to interact with the GitHub API, handling all HTTP methods for data retrieval and submission
+- [pytest-html](https://pytest-html.readthedocs.io/en/latest/) for detailed reports
+- [pytest-md-report](https://pypi.org/project/pytest-md-report/) for simple reports

@@ -1,0 +1,14 @@
+|                  filepath                   | passed | SUBTOTAL |
+| ------------------------------------------- | -----: | -------: |
+| tests/test_401_invalid_token.py             |      1 |        1 |
+| tests/test_404_repo_not_found.py            |      1 |        1 |
+| tests/test_422_create_dupe_repo.py          |      1 |        1 |
+| tests/test_422_create_repo_without_name.py  |      1 |        1 |
+| tests/test_comment_workflow.py              |      1 |        1 |
+| tests/test_get_repo_invalid_cases.py        |      4 |        4 |
+| tests/test_issue_workflow.py                |      1 |        1 |
+| tests/test_mock_xratelimit_limit_reached.py |      1 |        1 |
+| tests/test_parse_xratelimits.py             |      1 |        1 |
+| tests/test_repo_pagination.py               |      1 |        1 |
+| tests/test_repo_workflow.py                 |      1 |        1 |
+| TOTAL                                       |     14 |       14 |
