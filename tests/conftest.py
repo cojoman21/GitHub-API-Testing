@@ -55,7 +55,7 @@ def temp_repo(repo_client):
 
     yield name
 
-    repo_client.delete_with_retry(os.getenv("GITHUB_USERNAME"), name)
+    repo_client.delete_with_retry(repo_client.username, name)
 
 
 # Creates a temporary issue (setup) and deletes it (sets state="closed") after the test is complete (teardown)
