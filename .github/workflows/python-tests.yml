@@ -32,7 +32,7 @@ jobs:
             
             - name: Add Report to Summary
               if: always()
-              run: cat report.md >> $GITHUB_STEP_SUMMARY
+              run: cat reports/report.md >> $GITHUB_STEP_SUMMARY
             
             - name: Upload HTML Report
               if: always()
