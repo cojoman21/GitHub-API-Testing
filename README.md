@@ -83,6 +83,8 @@ cd GitHub-API-Testing
 uv sync --frozen
 ```
 
+> This uses `uv.lock` to recreate the virtual environment using the exact dependency versions from the lockfile.
+
 ### 4. Configure the `.env` file
 
 - Create a file named `.env` in the root directory and add your credentials:
@@ -103,8 +105,6 @@ You need to generate a token from GitHub using [these](https://docs.github.com/e
 .env
 ```
 
-
-> This uses `uv.lock` to recreate the virtual environment using the exact dependency versions from the lockfile.
 
 ### 5. Running the tests: 
 
